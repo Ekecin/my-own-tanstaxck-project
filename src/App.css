@@ -1,0 +1,318 @@
+:root {
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --card-hover: #334155;
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --accent: #38bdf8;
+  --accent-hover: #0284c7;
+  --rating: #f59e0b;
+}
+
+/* Remove the default Vite layout restrictions */
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Let the application occupy the entire viewport */
+#root {
+  max-width: none;
+  text-align: initial;
+}
+
+/* Movie Box main layout */
+.container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 2rem;
+}
+
+/* Keep the movie grid responsive across the full width */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.75rem;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  line-height: 1.5;
+  padding: 2rem;
+  padding-top: calc(2rem + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+  width: 100vw;
+}
+
+.container {
+  max-width: 100vw;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.025em;
+}
+
+/* Controls / Filters */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  justify-content: center;
+  background: var(--card-bg);
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.controls input,
+.controls select {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.controls input:focus,
+.controls select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+
+/* Movie Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.75rem;
+}
+
+.movie-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.movie-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
+}
+
+.movie-card img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  background-color: #000;
+}
+
+.movie-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 1rem;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Modal Overlay & Container */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--card-bg);
+  max-width: 800px;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  max-height: 90vh;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 640px) {
+  .modal-content {
+    flex-direction: row;
+  }
+  .modal-media {
+    width: 45%;
+  }
+  .modal-details {
+    width: 55%;
+  }
+}
+
+/* Modal Media & Embedded Trailer */
+.modal-media {
+  position: relative;
+  background: #000;
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.modal-media iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+  aspect-ratio: 16 / 9;
+  border: none;
+  display: block;
+}
+
+/* Details Section */
+.modal-details {
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.modal-details h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+}
+
+.modal-details p {
+  color: var(--text-main);
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.rating {
+  color: var(--rating);
+  font-weight: 600;
+}
+
+.no-trailer-note {
+  color: var(--text-sub);
+  font-size: 0.85rem;
+  margin-top: 1rem;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid #334155;
+  color: var(--text-main);
+  font-size: 1.25rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.close-btn:hover {
+  background: #ef4444;
+  border-color: #ef4444;
+  transform: scale(1.05);
+}
+/* Skeleton Container */
+.skeleton-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.skeleton-poster {
+  width: 100%;
+  height: 320px;
+}
+
+.skeleton-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skeleton-line {
+  height: 1rem;
+  border-radius: 4px;
+}
+
+.skeleton-line.title {
+  width: 80%;
+}
+
+/* Shimmer Animation Effect */
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--card-bg) 25%,
+    #334155 37%,
+    var(--card-bg) 63%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
